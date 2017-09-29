@@ -11,6 +11,6 @@ public:
 		window->clear(sf::Color::White); 
 		return -1;
 	}
-	virtual int handleInput(sf::Event & event) override { return -1 };
+	virtual int handleInput(sf::Event & event) override { return -1; };
 	inline virtual int processLogic(sf::Time deltaTime) override { return Codes::Null; };
 };

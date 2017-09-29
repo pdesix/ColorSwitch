@@ -1,10 +1,10 @@
 #include "Game.h"
 
-void Game::ProcessCode(int returnCode)
+void Game::processCode(int returnCode)
 {
 }
 
-Game::Game() : m_window(new sf::RenderWindow(sf::VideoMode(800, 600), "Tanks")), currentState{ std::make_shared<IState>() }
+Game::Game() : m_window(new sf::RenderWindow(sf::VideoMode(800, 600), "Tanks")), m_currentState{ std::make_shared<IState>() }
 {
 	m_window->setFramerateLimit(30);
 	m_inputController = m_currentState;
