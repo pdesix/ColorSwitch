@@ -9,13 +9,12 @@ int main();
 
 class Game
 {
-	std::shared_ptr<sf::RenderWindow> m_window;
-	std::shared_ptr<IState<Game>> m_currentState;
-	std::shared_ptr<IInputController> m_inputController;
-	void run(); 
+	std::unique_ptr<sf::RenderWindow> m_window;
+	std::unique_ptr<IState<Game>> m_currentState;
 	void loopProcessing(LoopCodes signal);
 
 public:
 	Game();
 	~Game();
+	void run();
 };

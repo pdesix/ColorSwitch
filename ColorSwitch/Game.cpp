@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game() : m_window{ new sf::RenderWindow(sf::VideoMode{800, 600 }, "ColorSwitch") }, m_currentState{ std::make_shared<MenuState<Game>>() }
+Game::Game() : m_window{ new sf::RenderWindow(sf::VideoMode{800, 600 }, "ColorSwitch") }, m_currentState{ std::make_unique<MenuState<Game>>() }
 {
 	m_window->setFramerateLimit(30);
 	m_inputController = m_currentState;
@@ -16,10 +16,11 @@ void Game::run()
 	sf::Event event;
 	sf::Clock clock;
 	clock.restart();
+	m_currentState->updatePostProcess(&Game::loopProcessing);
 	while (m_window->isOpen())
 	{
 		while (m_window->pollEvent(event))
-			m_inputController->handleInput(event);
+			m_currentState->handleInput(event);
 
 		m_window->clear(sf::Color::White);
 		m_currentState->manageGraphic(*m_window);
@@ -32,5 +33,8 @@ void Game::run()
 
 void Game::loopProcessing(LoopCodes signal)
 {
-
+	if (signal == GameStart)
+	{
+		//m_currentState = std::make_shared()
+	}
 }
