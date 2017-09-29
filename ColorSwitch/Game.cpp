@@ -4,7 +4,7 @@ void Game::processCode(int returnCode)
 {
 }
 
-Game::Game() : m_window(new sf::RenderWindow(sf::VideoMode(800, 600), "Tanks")), m_currentState{ std::make_shared<MenuState>() }
+Game::Game() : m_window{ new sf::RenderWindow(sf::VideoMode{800, 600 }, "Tanks") }, m_currentState{ std::make_shared<MenuState>() }
 {
 	m_window->setFramerateLimit(30);
 	m_inputController = m_currentState;
