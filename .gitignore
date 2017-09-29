@@ -259,3 +259,10 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# Outputs and libraries
+Debug/
+Release/
+ColorSwitch/Debug
+ColorSwitch/Release
+ColorSwitch/SFML-2.4.2
