@@ -1,6 +1,6 @@
 #include "Game.h"
 
-void Game::ProcessCode(int returnCode)
+void Game::processCode(int returnCode)
 {
 }
 
