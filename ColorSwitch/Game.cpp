@@ -3,7 +3,6 @@
 Game::Game() : m_window{ new sf::RenderWindow(sf::VideoMode{800, 600 }, "ColorSwitch") }, m_currentState{ std::make_unique<MenuState<Game>>() }
 {
 	m_window->setFramerateLimit(30);
-	m_inputController = m_currentState;
 }
 
 
