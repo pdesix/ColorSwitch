@@ -42,4 +42,5 @@ public:
 	virtual int manageGraphic(sf::RenderWindow & window) = 0;
 	virtual int handleInput(sf::Event & event) = 0;
 	virtual int processLogic(sf::Time deltaTime) = 0;
+	inline virtual void updatePostProcess(std::function<void(const T &, LoopCodes)> postProcessFunction) { m_postProcess = postProcessFunction; }
 };
