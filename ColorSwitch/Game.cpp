@@ -1,10 +1,6 @@
 #include "Game.h"
 
-void Game::processCode(int returnCode)
-{
-}
-
-Game::Game() : m_window{ new sf::RenderWindow(sf::VideoMode{800, 600 }, "Tanks") }, m_currentState{ std::make_shared<MenuState>() }
+Game::Game() : m_window{ new sf::RenderWindow(sf::VideoMode{800, 600 }, "ColorSwitch") }, m_currentState{ std::make_shared<MenuState<Game>>() }
 {
 	m_window->setFramerateLimit(30);
 	m_inputController = m_currentState;
@@ -23,13 +19,18 @@ void Game::run()
 	while (m_window->isOpen())
 	{
 		while (m_window->pollEvent(event))
-			processCode(m_inputController->handleInput(event));
+			m_inputController->handleInput(event);
 
 		m_window->clear(sf::Color::White);
 		m_currentState->manageGraphic(m_window);
 		m_window->display();
 
-		processCode(m_currentState->processLogic(clock.getElapsedTime()));
+		m_currentState->processLogic(clock.getElapsedTime());
 		clock.restart();
 	}
+}
+
+void Game::loopProcessing(LoopCodes signal)
+{
+
 }
