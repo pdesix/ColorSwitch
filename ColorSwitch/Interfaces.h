@@ -43,6 +43,7 @@ protected:
 
 	T & m_base;
 	GameCallback m_postProcess;
+	
 	std::vector<std::shared_ptr<sf::Drawable>> m_drawables;
 
 public:
