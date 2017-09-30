@@ -18,8 +18,8 @@ public:
 	{
 		if (event.KeyPressed && event.key.code == sf::Keyboard::Return) 
 			m_postProcess(m_base,GameStart);
-		//if (event.KeyPressed && event.key.code == sf::Keyboard::Escape) 
-			
+		else if (event.KeyPressed && event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
+			m_postProcess(m_base, GameClose);
 	};
 
 	inline virtual void processLogic(sf::Time deltaTime) override 

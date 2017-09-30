@@ -32,8 +32,12 @@ void Game::run()
 
 void Game::loopProcessing(LoopCodes signal)
 {
-	if (signal == GameStart)
-	{
+	switch (signal) {
+	case GameStart:
 		//m_currentState = std::make_shared()
+		break;
+	case GameClose:
+		m_window->close();
+		break;
 	}
 }

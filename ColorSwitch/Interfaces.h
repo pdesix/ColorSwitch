@@ -8,6 +8,7 @@ enum LoopCodes
 {
 	Null,
 	GameStart,
+	GameClose,
 	GameLose,
 	GameWin,
 	GameError,
