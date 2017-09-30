@@ -42,11 +42,11 @@ public:
 template<class T>
 class Map : public ILogicProcessor
 {
-	typedef std::function<void(T &)> GameFunction;
+	typedef std::function<void(T &)> GameStateFunction;
 	typedef std::function<void(Player&)> PlayerFunction;
-	typedef T Game;
+	typedef T GameState;
 
-	Game & m_base;
+	GameState & m_base;
 	std::function<void(T &)> m_playerDeathCallback;
 	std::function<void(T &)> m_pointGainedCallback;
 	std::function<void(Player &)> m_playerCollorChanged;
@@ -54,7 +54,7 @@ class Map : public ILogicProcessor
 	std::shared_ptr<Player> m_player;
 
 public:
-	Map(std::shared_ptr<Player> playerPointer, Game & gameController, PlayerFunction playerCollorChangedCallback, GameFunction deathCallback, GameFunction pointCallback) : m_base{ gameController } m_playerDeathCallback { deathCallback }, m_pointGainedCallback{ pointCallback }, m_player{ playerPointer }, m_playerCollorChanged{ playerCollorChangedCallback } {}
+	Map(std::shared_ptr<Player> playerPointer, GameState & gameController, PlayerFunction playerCollorChangedCallback, GameStateFunction deathCallback, GameStateFunction pointCallback) : m_base{ gameController } m_playerDeathCallback { deathCallback }, m_pointGainedCallback{ pointCallback }, m_player{ playerPointer }, m_playerCollorChanged{ playerCollorChangedCallback } {}
 	~Map() { }
 	std::vector<std::shared_ptr<sf::Drawable>> getDrawables() { return m_drawables; }
 
