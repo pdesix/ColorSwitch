@@ -1,9 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class Player {
-private:
-	sf::CircleShape playerShape;
+class Player : public sf::CircleShape {
 public:
 	Player();
 	~Player();
