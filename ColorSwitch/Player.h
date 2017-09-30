@@ -5,5 +5,6 @@ class Player : public sf::CircleShape {
 public:
 	Player();
 	~Player();
+	int getColor() { return 0; }
 };
 

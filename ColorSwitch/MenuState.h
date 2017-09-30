@@ -6,7 +6,7 @@ class MenuState : public IState<T>
 {
 	sf::CircleShape x;
 public:
-	MenuState(T & baseGame, std::function<void(T &, LoopCodes)> processFunction) : IState(baseGame,processFunction) 
+	MenuState(Game & baseGame, GameCallback processFunction) : IState(baseGame,processFunction) 
 	{
 		m_drawables.push_back(std::make_shared<sf::CircleShape>(x));
 		// no i w konstruktorze generalnie dodajemy wszystkie obiekty, które maj¹ siê wyœwietlaæ (teksty, sprite'y, kszta³ty)
