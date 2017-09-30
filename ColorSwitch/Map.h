@@ -3,13 +3,13 @@
 #include "Player.h"
 
 template<class T>
-class Obstacle : public sf::Sprite
+class Obstacle : public sf::CircleShape
 {
 	typedef std::function<void(T &)> GameFunction;
 	typedef T Game;
 
 	Game & m_base;
-	class ObstacleInternal : public sf::Sprite { };
+	class ObstacleInternal : public sf::CircleShape { };
 	ObstacleInternal m_intern;
 	std::shared_ptr<Player> m_player;
 	std::function<void(T &)> m_playerDeath;
@@ -21,6 +21,12 @@ public:
 	{
 		sf::Sprite::move(0.0, 10.0);
 		m_intern.move(0.0, 10.0);
+	}
+	
+	void setRadius(float radius) override
+	{
+		sf::CircleShape::setRadius(radius);
+		m_intern->setRadius(radius - 5.f);
 	}
 
 	void checkCollision()
@@ -47,14 +53,22 @@ class Map : public ILogicProcessor
 	typedef T GameState;
 
 	GameState & m_base;
-	std::function<void(T &)> m_playerDeathCallback;
-	std::function<void(T &)> m_pointGainedCallback;
-	std::function<void(Player &)> m_playerCollorChanged;
-	std::vector<std::shared_ptr<sf::Drawable>> m_drawables;
+	GameStateFunction m_playerDeathCallback;
+	GameStateFunction m_pointGainedCallback;
+	PlayerFunction m_playerCollorChanged;
+
 	std::shared_ptr<Player> m_player;
+	std::vector<std::shared_ptr<sf::Drawable>> m_drawables;
+	std::vector<std::shared_ptr<Obstacle<GameState>>> m_obstacles;
 
 public:
-	Map(std::shared_ptr<Player> playerPointer, GameState & gameController, PlayerFunction playerCollorChangedCallback, GameStateFunction deathCallback, GameStateFunction pointCallback) : m_base{ gameController } m_playerDeathCallback { deathCallback }, m_pointGainedCallback{ pointCallback }, m_player{ playerPointer }, m_playerCollorChanged{ playerCollorChangedCallback } {}
+	Map(std::shared_ptr<Player> playerPointer, GameState & gameController, PlayerFunction playerCollorChangedCallback, GameStateFunction deathCallback, GameStateFunction pointCallback)
+		: m_base{ gameController }, m_playerDeathCallback { deathCallback }, m_pointGainedCallback{ pointCallback }, m_player{ playerPointer }, m_playerCollorChanged{ playerCollorChangedCallback } 
+	{
+		std::shared_ptr<Obstacle<GameState>> obstacle{ std::make_shared<Obstacle<GameState>>(playerPointer, gameController, deathCallback) };
+		obstacle->setRadius(25.f);
+	}
+
 	~Map() { }
 	std::vector<std::shared_ptr<sf::Drawable>> getDrawables() { return m_drawables; }
 
