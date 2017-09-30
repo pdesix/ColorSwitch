@@ -18,11 +18,12 @@ public:
 	{
 		if (event.KeyPressed && event.key.code == sf::Keyboard::Return) 
 			m_postProcess(m_base,GameStart);
+		//if (event.KeyPressed && event.key.code == sf::Keyboard::Escape) 
+			
 	};
 
 	inline virtual void processLogic(sf::Time deltaTime) override 
 	{ 
 		x.move(-1.f, -2.f);
-		// w logice mo¿na se robiæ co siê chce i na czym siê chce, rysowanie jest niezale¿ne i interface-provided
 	};
 };

@@ -7,7 +7,6 @@ class GameState : public IState<T>
 {
 private:
 	std::shared_ptr<Player> m_player;
-
 public:
 	GameState(Game & baseGame, GameCallback processFunction) : IState(baseGame, processFunction), m_player{std::make_shared{new Player()}} 
 	{ 
