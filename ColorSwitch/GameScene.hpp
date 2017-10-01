@@ -17,6 +17,12 @@ public:
 		m_drawables.push_back(m_player);
 	}
 
+	virtual void handleInput(sf::Event & event) override
+	{
+		if (event.KeyPressed && event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
+			runCallback(LoopCodes::GameClose);
+	}
+
 	void onDeath()
 	{
 		runCallback(LoopCodes::GameStart);
