@@ -17,6 +17,7 @@ public:
 		: m_active{ true }, m_playerCollorChanged{ &Player::onColorChange }, m_player{ player }
 	{
 		setRadius(10.f);
+		setOrigin(getGlobalBounds().height / 2.f, getGlobalBounds().width / 2.f);
 		setPosition(position.x,position.y);
 	}
 
@@ -91,6 +92,7 @@ public:
 			if (!m_switcher->isActive()) m_switcher->switchActivity();
 			sf::CircleShape::move(0.f, -750.f);
 			m_intern->move(0.f, -750.f);
+			m_switcher->setPosition(getPosition().x, getPosition().y);
 		}
 
 		sf::CircleShape::move(0.f, 60.f*deltaTime.asSeconds());
@@ -124,6 +126,11 @@ public:
 			{ 
 				m_playerDeath(m_base);
 				return true;
+			}
+
+			if (playerBounds.intersects(m_switcher->getGlobalBounds()))
+			{
+				m_switcher->switchActivity();
 			}
 		}
 		return false;
