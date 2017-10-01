@@ -13,7 +13,6 @@ private:
 
 public:
 	Player();
-	~Player();
 	int getColor() { return m_randNum; }
 
 	void onColorChange();

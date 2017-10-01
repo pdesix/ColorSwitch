@@ -5,10 +5,6 @@ Player::Player() :m_distribution(0,3), m_colors{ sf::Color::Blue, sf::Color::Yel
 	setFillColor(sf::Color::Green);
 }
 
-Player::~Player()
-{
-}
-
 void Player::onColorChange()
 {
 	m_randNum = m_distribution(m_generator);

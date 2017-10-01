@@ -1,13 +1,8 @@
 #include "Game.hpp"
 
-Game::Game() : m_window{ sf::VideoMode{800, 600 }, "ColorSwitch" }, m_currentState{ new MenuState<Game>(*this,&Game::loopProcessing) }
+Game::Game() : m_window{ sf::VideoMode{800, 600 }, "ColorSwitch" }, m_currentScene{ new MenuScene<Game>(*this,&Game::loopProcessing) }
 {
 	m_window.setFramerateLimit(30);
-}
-
-
-Game::~Game()
-{
 }
 
 void Game::run()
@@ -19,13 +14,13 @@ void Game::run()
 	while (m_window.isOpen())
 	{
 		while (m_window.pollEvent(event))
-			m_currentState->handleInput(event);
+			m_currentScene->handleInput(event);
 
 		m_window.clear(sf::Color::White);
-		m_currentState->manageGraphic(m_window);
+		m_currentScene->manageGraphic(m_window);
 		m_window.display();
 
-		m_currentState->processLogic(clock.getElapsedTime());
+		m_currentScene->processLogic(clock.getElapsedTime());
 		clock.restart();
 	}
 }
@@ -34,7 +29,7 @@ void Game::loopProcessing(LoopCodes signal)
 {
 	switch (signal) {
 	case LoopCodes::GameStart:
-		m_currentState = std::make_unique<GameState<Game>>(GameState<Game>(*this, &Game::loopProcessing));
+		m_currentScene = std::make_unique<GameScene<Game>>(GameScene<Game>(*this, &Game::loopProcessing));
 		break;
 	case LoopCodes::GameClose:
 		m_window.close();
