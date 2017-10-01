@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-Player::Player() : m_distribution(0,3), m_colors{ sf::Color::Blue, sf::Color::Yellow, sf::Color::Red, sf::Color::Green }, m_movement{0.f,0.f}
+Player::Player() : m_distribution(0,3), m_colors{ sf::Color::Red, sf::Color::Yellow, sf::Color::Blue, sf::Color::Green }, m_movement{0.f,0.f}
 {
 	onColorChange();
 	setRadius(15.f);
@@ -17,7 +17,7 @@ void Player::onColorChange()
 
 bool Player::applyGravity(sf::Time deltaTime)
 {
-	m_movement.y += 6.f * deltaTime.asSeconds();
+	m_movement.y += 10.f * deltaTime.asSeconds();
 	sf::CircleShape::move(m_movement);
 
 	if (getPosition().y < 350.f)
@@ -27,5 +27,5 @@ bool Player::applyGravity(sf::Time deltaTime)
 
 void Player::move()
 {
-	m_movement.y -= 3.f;
+	m_movement.y -= 5.f;
 }

@@ -35,7 +35,7 @@ void Game::loopProcessing(LoopCodes signal)
 		m_window.close();
 		break;
 	case LoopCodes::GameToMenu:
-		//m_currentScene = std::make_unique
+		m_currentScene = std::make_unique<MenuScene<Game>>(*this, &Game::loopProcessing);
 		break;
 	}
 }
