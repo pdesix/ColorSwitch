@@ -54,15 +54,6 @@ public:
 		sf::FloatRect playerBounds{ m_player->getGlobalBounds() };
 		playerBounds.height -= 7.5f;
 		playerBounds.top += 7.5f;
-		/*{
-			float rotation{ sf::CircleShape::getRotation() };
-			if (static_cast<int>(rotation) % 90 < 10) { }
-			else std::cout << "\n\nCurrent color down: " << static_cast<int>(rotation / 90.f);
-
-
-			if (static_cast<int>(rotation) % 90 < 10) {}
-			else std::cout << "\nCurrent color up: " << (static_cast<int>(rotation / 90.f) + 2)%4;
-		}*/
 		if (playerBounds.intersects(sf::CircleShape::getGlobalBounds()))
 		{
 			auto color = [&]
