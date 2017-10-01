@@ -29,7 +29,7 @@ void Game::loopProcessing(LoopCodes signal)
 {
 	switch (signal) {
 	case LoopCodes::GameStart:
-		m_currentScene = std::make_unique<GameScene<Game>>(GameScene<Game>(*this, &Game::loopProcessing));
+		m_currentScene = std::make_unique<GameScene<Game>>(*this, &Game::loopProcessing);
 		break;
 	case LoopCodes::GameClose:
 		m_window.close();
