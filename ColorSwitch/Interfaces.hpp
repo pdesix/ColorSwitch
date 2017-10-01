@@ -35,7 +35,7 @@ public:
 	virtual void processLogic(sf::Time deltaTime) = 0;
 };
 
-class IState : public IInputController, IGraphicManager, ILogicProcessor
+class IScene : public IInputController, IGraphicManager, ILogicProcessor
 {
 public:
 	virtual void manageGraphic(sf::RenderWindow & window) = 0;
@@ -44,7 +44,7 @@ public:
 };
 
 template<class Game>
-class BaseState : public IState
+class BaseScene : public IScene
 {
 protected:
 	using GameCallback = std::function<void(Game &, LoopCodes)>;
@@ -61,7 +61,7 @@ protected:
 	}
 
 public:
-	BaseState(Game & baseGame, GameCallback processFunction) : m_base{ baseGame }, m_postProcess{ processFunction }
+	BaseScene(Game & baseGame, GameCallback processFunction) : m_base{ baseGame }, m_postProcess{ processFunction }
 	{
 	}
 
