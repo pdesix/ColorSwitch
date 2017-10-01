@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include <SFML\Graphics.hpp>
-#include "Interfaces.h"
-#include "MenuState.h"
-#include "GameState.h"
+#include "Interfaces.hpp"
+#include "MenuState.hpp"
+#include "GameState.hpp"
 
 int main();
 

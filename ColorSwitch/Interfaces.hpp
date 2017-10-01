@@ -4,7 +4,7 @@
 #include <SFML\Graphics.hpp>
 #include <vector>
 
-enum LoopCodes
+enum class LoopCodes
 {
 	Null,
 	GameStart,

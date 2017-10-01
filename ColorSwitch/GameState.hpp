@@ -1,7 +1,7 @@
 #pragma once
-#include "Interfaces.h"
-#include "Player.h"
-#include "Map.h"
+#include "Interfaces.hpp"
+#include "Player.hpp"
+#include "Map.hpp"
 
 template<class T>
 class GameState : public IState<T>

@@ -1,5 +1,5 @@
 #pragma once
-#include "Interfaces.h"
+#include "Interfaces.hpp"
 
 template<class T>
 class MenuState : public IState<T>

@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "Game.hpp"
 
 Game::Game() : m_window{ new sf::RenderWindow(sf::VideoMode{800, 600 }, "ColorSwitch") }, m_currentState{ std::make_unique<MenuState<Game>>(MenuState<Game>(*this,&Game::loopProcessing)) }
 {

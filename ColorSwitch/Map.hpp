@@ -1,6 +1,6 @@
 #pragma once
-#include "Interfaces.h"
-#include "Player.h"
+#include "Interfaces.hpp"
+#include "Player.hpp"
 
 template<class T>
 class Obstacle : public sf::CircleShape
