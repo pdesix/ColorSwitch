@@ -22,7 +22,7 @@ void Game::run()
 			m_currentState->handleInput(event);
 
 		m_window.clear(sf::Color::White);
-		m_currentState->manageGraphic(*m_window);
+		m_currentState->manageGraphic(m_window);
 		m_window.display();
 
 		m_currentState->processLogic(clock.getElapsedTime());
