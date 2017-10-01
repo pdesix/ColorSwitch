@@ -17,14 +17,19 @@ public:
 		: m_base{ baseObject }, m_player { gamePlayer }, m_intern{std::make_shared<sf::CircleShape>()},
 		m_playerDeath{ &GameScene::onDeath }
 	{
-		m_intern->setFillColor(sf::Color::Red);
-		//setFillColor(sf::Color::Black);
+		m_intern->setFillColor(sf::Color::White);
 
-		setRadius(25.f);
-		m_intern->setRadius(20.f);
+		setRadius(75.f);
+		m_intern->setRadius(65.f);
 
-		setPosition(400.f - (getGlobalBounds().width / 2), -150.f * positionIndex);
-		m_intern->setPosition(this->getPosition().x - m_intern->getGlobalBounds().height/8, this->getPosition().y + m_intern->getGlobalBounds().width/8);
+		setOrigin(getGlobalBounds().height / 2.f, getGlobalBounds().width / 2.f);
+		m_intern->setOrigin(m_intern->getGlobalBounds().height / 2.f, m_intern->getGlobalBounds().width / 2.f);
+
+		setPosition(400.f, -150.f * positionIndex);
+
+		float pX = getGlobalBounds().left + getGlobalBounds().width / 2.f;
+		float pY = getGlobalBounds().top + getGlobalBounds().height / 2.f;
+		m_intern->setPosition(pX, pY);
 	}
 
 	std::shared_ptr<sf::CircleShape> getInternalDrawable() { return m_intern; }
@@ -37,8 +42,8 @@ public:
 		rotate(1.f);
 		m_intern->rotate(1.f);
 
-		while (getPosition().y > 950.f) setPosition(getPosition().x, getPosition().y - 650.f);
-		while (m_intern->getPosition().y > 950.f) m_intern->setPosition(m_intern->getPosition().x, m_intern->getPosition().y - 650.f);
+		while (getPosition().y > 750.f) setPosition(getPosition().x, getPosition().y - 750.f);
+		while (m_intern->getPosition().y > 750.f) m_intern->setPosition(m_intern->getPosition().x, m_intern->getPosition().y - 750.f);
 	}
 	
 	void checkCollision()
