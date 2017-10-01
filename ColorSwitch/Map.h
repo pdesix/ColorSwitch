@@ -5,30 +5,41 @@
 template<class T>
 class Obstacle : public sf::CircleShape
 {
-	typedef std::function<void(T &)> GameFunction;
-	typedef T Game;
+	typedef std::function<void(T &)> GameStateFunction;
+	typedef T GameState;
 
-	Game & m_base;
-	class ObstacleInternal : public sf::CircleShape { };
-	ObstacleInternal m_intern;
+	GameState & m_base;
+	sf::CircleShape m_intern;
 	std::shared_ptr<Player> m_player;
 	std::function<void(T &)> m_playerDeath;
 
 public:
-	Obstacle(std::shared_ptr<Player> gamePlayer, Game& baseObject, GameFunction playerDeathCallback) : m_base{ baseObject }, m_player { gamePlayer }, m_playerDeath{ playerDeathCallback } { }
+	Obstacle(std::shared_ptr<Player> gamePlayer, GameState & baseObject, GameStateFunction playerDeathCallback) : m_base{ baseObject }, m_player { gamePlayer }, m_playerDeath{ playerDeathCallback }
+	{
+		m_intern.setFillColor(sf::Color::Red);
+		setFillColor(sf::Color::Black);
+
+		setRadius(25.f);
+		m_intern.setRadius(20.f);
+
+	//	setPosition(400.f - (getGlobalBounds().width / 2), -150.f * i); TODO
+	//	m_intern(400.f - (m_intern.getGlobalBounds().width / 2), -150.f * i + );
+	}
+
+	sf::CircleShape& getInternalDrawable() { return m_intern; }
 
 	void move()
 	{
-		sf::Sprite::move(0.0, 10.0);
-		m_intern.move(0.0, 10.0);
+		setPosition(sf::Vector2f{ getPosition().x, getPosition().y + 5.f });
+		m_intern.setPosition(sf::Vector2f{ m_intern.getPosition().x, m_intern.getPosition().y + 5.f });
+		sf::CircleShape::rotate(1.f);
+
+		while (getPosition().y > 650.f) setPosition(sf::Vector2f{ getPosition().x, getPosition().y - 650.f });
+		while (m_intern.getPosition().y > 650) m_intern.setPosition(sf::Vector2f{ m_intern.getPosition().x, m_intern.getPosition().y - 650.f });
+
+		// std::cout << "Pos: " << getPosition().x << " ; " << getPosition().y << " \n";
 	}
 	
-	void setRadius(float radius) override
-	{
-		sf::CircleShape::setRadius(radius);
-		m_intern->setRadius(radius - 5.f);
-	}
-
 	void checkCollision()
 	{
 		if (m_player->getGlobalBounds().intersects(sf::Sprite::getGlobalBounds()))
@@ -61,12 +72,22 @@ class Map : public ILogicProcessor
 	std::vector<std::shared_ptr<sf::Drawable>> m_drawables;
 	std::vector<std::shared_ptr<Obstacle<GameState>>> m_obstacles;
 
+	sf::Texture circleTexture;
+
 public:
 	Map(std::shared_ptr<Player> playerPointer, GameState & gameController, PlayerFunction playerCollorChangedCallback, GameStateFunction deathCallback, GameStateFunction pointCallback)
 		: m_base{ gameController }, m_playerDeathCallback { deathCallback }, m_pointGainedCallback{ pointCallback }, m_player{ playerPointer }, m_playerCollorChanged{ playerCollorChangedCallback } 
 	{
-		std::shared_ptr<Obstacle<GameState>> obstacle{ std::make_shared<Obstacle<GameState>>(playerPointer, gameController, deathCallback) };
-		obstacle->setRadius(25.f);
+		if (!circleTexture.loadFromFile("assets/data001.png")) std::cerr << "cannot load assets/data001.png";
+		for (int i = 0; i < 3; i++)
+		{
+			std::shared_ptr<Obstacle<GameState>> obstacle{ std::make_shared<Obstacle<GameState>>(playerPointer, gameController, deathCallback) };
+
+			m_drawables.push_back(obstacle);
+			m_obstacles.push_back(obstacle);
+
+			m_drawables.push_back(std::make_shared<sf::CircleShape>(obstacle->getInternalDrawable()));
+		}
 	}
 
 	~Map() { }
@@ -74,7 +95,8 @@ public:
 
 	virtual void processLogic(sf::Time deltaTime) override
 	{
-
+		for (std::shared_ptr<Obstacle<GameState>> obstacle : m_obstacles)
+			obstacle->move();
 	}
 };
 
