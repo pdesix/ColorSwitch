@@ -11,10 +11,8 @@ class MenuScene : public BaseScene<Game>
 
 	bool up;
 public:
-	MenuScene(Game & baseGame, GameCallback processFunction) : BaseScene(baseGame, processFunction), m_font{ new sf::Font() }
+	MenuScene(Game & baseGame, GameCallback processFunction) : BaseScene(baseGame, processFunction), m_font{ new sf::Font() }, play{ new sf::Text("Play", *m_font, 60u) }, exit{ new sf::Text("Exit", *m_font, 60u) }
 	{
-		play = { new sf::Text("Play", *m_font, 60u) };
-		exit = { new sf::Text("Exit", *m_font, 60u) };
 
 		if (!m_font->loadFromFile("assets/arial.ttf")) {
 			std::cerr << "cannot load assets/arial.ttf";
