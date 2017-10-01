@@ -12,9 +12,9 @@ public:
 	virtual void handleInput(sf::Event & event) override
 	{
 		if (event.KeyPressed && event.key.code == sf::Keyboard::Return) 
-			m_postProcess(m_base,GameStart);
+			runCallback(GameStart);
 		else if (event.KeyPressed && event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
-			m_postProcess(m_base, GameClose);
+			runCallback(GameClose);
 	};
 
 	inline virtual void processLogic(sf::Time deltaTime) override 
