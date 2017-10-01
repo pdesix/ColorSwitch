@@ -27,7 +27,7 @@ public:
 		m_drawables.push_back(play);
 		m_drawables.push_back(exit);
 
-		up = false;
+		up = true;
 	}
 
 	virtual void switchOption(bool up) {
@@ -45,9 +45,7 @@ public:
 
 	virtual void handleInput(sf::Event & event) override
 	{
-		if (event.KeyPressed && event.key.code == sf::Keyboard::Return)
-			runCallback(LoopCodes::GameStart);
-		else if (event.type == sf::Event::Closed)
+		if (event.type == sf::Event::Closed)
 			runCallback(LoopCodes::GameClose);
 		else if (event.KeyPressed && event.key.code == sf::Keyboard::Escape)
 			runCallback(LoopCodes::GameToMenu);
@@ -60,6 +58,14 @@ public:
 		else if (event.KeyPressed && event.key.code == sf::Keyboard::Up) {
 			up = true;
 			switchOption(up);
+		}
+		else if (event.KeyPressed && event.key.code == sf::Keyboard::Return) {
+			if (up) {
+				runCallback(LoopCodes::GameStart);
+			}
+			else {
+				runCallback(LoopCodes::GameClose);
+			}
 		}
 	}
 
