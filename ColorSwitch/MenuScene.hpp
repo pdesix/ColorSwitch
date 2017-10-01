@@ -23,7 +23,7 @@ public:
 
 		play->setPosition(800 / 2 - 40, 100);
 		exit->setPosition(800 / 2 - 40, 300);
-
+    
 		m_drawables.push_back(play);
 		m_drawables.push_back(exit);
 
