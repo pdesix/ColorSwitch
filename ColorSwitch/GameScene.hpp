@@ -4,15 +4,15 @@
 #include "Map.hpp"
 
 template<class Game>
-class GameState : public BaseState<Game>
+class GameScene : public BaseScene<Game>
 {
 private:
 	std::shared_ptr<Player> m_player;
-	Map<GameState> m_gameMap;
+	Map<GameScene> m_gameMap;
 
 public:
-	GameState(Game & baseGame, GameCallback processFunction) 
-		: BaseState<Game>(baseGame, processFunction), m_player{ new Player() }, m_gameMap{m_drawables, m_player,*this,&Player::onColorChange,&GameState::onDeath, &GameState::onPoint}
+	GameScene(Game & baseGame, GameCallback processFunction) 
+		: BaseScene<Game>(baseGame, processFunction), m_player{ new Player() }, m_gameMap{m_drawables, m_player, *this}
 	{ 
 		m_drawables.push_back(m_player);
 	}

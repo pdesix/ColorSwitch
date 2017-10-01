@@ -138,10 +138,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
-    <ClInclude Include="GameState.hpp" />
+    <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="Interfaces.hpp" />
     <ClInclude Include="Map.hpp" />
-    <ClInclude Include="MenuState.hpp" />
+    <ClInclude Include="MenuScene.hpp" />
     <ClInclude Include="Player.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

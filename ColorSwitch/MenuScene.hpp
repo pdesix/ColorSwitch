@@ -2,10 +2,10 @@
 #include "Interfaces.hpp"
 
 template<class Game>
-class MenuState : public BaseState<Game>
+class MenuScene : public BaseScene<Game>
 {
 public:
-	MenuState(Game & baseGame, GameCallback processFunction) : BaseState(baseGame, processFunction)
+	MenuScene(Game & baseGame, GameCallback processFunction) : BaseScene(baseGame, processFunction)
 	{
 	}
 
