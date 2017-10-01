@@ -78,4 +78,17 @@ public:
 	virtual void processLogic(sf::Time deltaTime) override
 	{
 	}
+
+	virtual bool popDrawable(std::shared_ptr<sf::Drawable> object)
+	{
+		for (unsigned int i = 0u; i < m_drawables.size(); i++)
+		{
+			if (m_drawables[i] == object)
+			{
+				m_drawables.erase(i, 1);
+				return true;
+			}
+		}
+		return false;
+	}
 };
