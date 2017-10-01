@@ -2,10 +2,10 @@
 #include "Interfaces.hpp"
 
 template<class Game>
-class MenuState : public StateManager<Game>
+class MenuState : public BaseState<Game>
 {
 public:
-	MenuState(Game & baseGame, GameCallback processFunction) : StateManager(baseGame,processFunction) 
+	MenuState(Game & baseGame, GameCallback processFunction) : BaseState(baseGame, processFunction)
 	{
 	}
 
@@ -15,9 +15,9 @@ public:
 			runCallback(LoopCodes::GameStart);
 		else if (event.KeyPressed && event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
 			runCallback(LoopCodes::GameClose);
-	};
+	}
 
 	inline virtual void processLogic(sf::Time deltaTime) override 
 	{ 
-	};
+	}
 };

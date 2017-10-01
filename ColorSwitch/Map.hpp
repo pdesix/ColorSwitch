@@ -90,8 +90,6 @@ public:
 		}
 	}
 
-	~Map() { }
-
 	virtual void processLogic(sf::Time deltaTime) override
 	{
 		for (std::shared_ptr<Obstacle<GameState>> obstacle : m_obstacles)

@@ -10,7 +10,7 @@ int main();
 class Game
 {
 	sf::RenderWindow m_window;
-	std::unique_ptr<StateManager<Game>> m_currentState;
+	std::unique_ptr<BaseState<Game>> m_currentState;
 	void loopProcessing(LoopCodes signal);
 
 public:

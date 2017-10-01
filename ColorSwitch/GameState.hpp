@@ -4,7 +4,7 @@
 #include "Map.hpp"
 
 template<class Game>
-class GameState : public StateManager<Game>
+class GameState : public BaseState<Game>
 {
 private:
 	std::shared_ptr<Player> m_player;
@@ -12,7 +12,7 @@ private:
 
 public:
 	GameState(Game & baseGame, GameCallback processFunction) 
-		: StateManager(baseGame, processFunction), m_player{std::make_shared<Player>(Player())}, m_gameMap{m_drawables, m_player,*this,&Player::onColorChange,&GameState::onDeath, &GameState::onPoint}
+		: BaseState<Game>(baseGame, processFunction), m_player{ new Player() }, m_gameMap{m_drawables, m_player,*this,&Player::onColorChange,&GameState::onDeath, &GameState::onPoint}
 	{ 
 		m_drawables.push_back(m_player);
 	}
@@ -26,6 +26,8 @@ public:
 	{
 	}
 
-	virtual void handleInput(sf::Event & event) override { return; };
-	inline virtual void processLogic(sf::Time deltaTime) override { m_gameMap.processLogic(deltaTime); };
+	inline virtual void processLogic(sf::Time deltaTime) override 
+	{ 
+		m_gameMap.processLogic(deltaTime); 
+	}
 };
