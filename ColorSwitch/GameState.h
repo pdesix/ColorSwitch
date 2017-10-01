@@ -11,12 +11,10 @@ private:
 	Map<GameState> m_gameMap;
 
 public:
-	GameState(Game & baseGame, GameCallback processFunction) : IState(baseGame, processFunction), m_player{std::make_shared<Player>(Player())}, m_gameMap{m_player,*this,&Player::onColorChange,&GameState::onDeath, &GameState::onPoint}
+	GameState(Game & baseGame, GameCallback processFunction) 
+		: IState(baseGame, processFunction), m_player{std::make_shared<Player>(Player())}, m_gameMap{m_drawables, m_player,*this,&Player::onColorChange,&GameState::onDeath, &GameState::onPoint}
 	{ 
 		m_drawables.push_back(m_player);
-		std::vector<std::shared_ptr<sf::Drawable>> mapDrawables{ m_gameMap.getDrawables() };
-		for (std::shared_ptr<sf::Drawable> drawable : mapDrawables)
-			m_drawables.push_back(drawable);
 	}
 
 	void onDeath()
