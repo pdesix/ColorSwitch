@@ -38,14 +38,22 @@ public:
 template<class T>
 class IState: public IInputController, public IGraphicManager, public ILogicProcessor
 {
-protected:
-	typedef std::function<void(T &, LoopCodes)> GameCallback;
+public:
 	typedef T Game;
+	typedef std::function<void(Game &, LoopCodes)> GameCallback;
 
-	T & m_base;
+private:
 	GameCallback m_postProcess;
+
+protected:
+	T & m_base;
 	
 	std::vector<std::shared_ptr<sf::Drawable>> m_drawables;
+
+	void runCallback(LoopCodes code)
+	{
+		m_postProcess(m_base, code);
+	}
 
 public:
 	IState(Game & baseGame, GameCallback processFunction) : m_drawables{ }, m_base{ baseGame }, m_postProcess{ processFunction } {}
