@@ -54,21 +54,30 @@ public:
 		sf::FloatRect playerBounds{ m_player->getGlobalBounds() };
 		playerBounds.height -= 7.5f;
 		playerBounds.top += 7.5f;
+		/*{
+			float rotation{ sf::CircleShape::getRotation() };
+			if (static_cast<int>(rotation) % 90 < 10) { }
+			else std::cout << "\n\nCurrent color down: " << static_cast<int>(rotation / 90.f);
+
+
+			if (static_cast<int>(rotation) % 90 < 10) {}
+			else std::cout << "\nCurrent color up: " << (static_cast<int>(rotation / 90.f) + 2)%4;
+		}*/
 		if (playerBounds.intersects(sf::CircleShape::getGlobalBounds()))
 		{
 			auto color = [&]
 			{
 				if (m_player->getPosition().y > getGlobalBounds().top + getGlobalBounds().width)
 				{
-					float rotation{ sf::Sprite::getRotation() };
+					float rotation{ sf::CircleShape::getRotation() };
 					if (static_cast<int>(rotation) % 90 < 10) return -1;
 					else return static_cast<int>(rotation / 90.f);
 				}
 				else
 				{
-					float rotation{ sf::Sprite::getRotation() };
+					float rotation{ sf::CircleShape::getRotation() };
 					if (static_cast<int>(rotation) % 90 < 10) return -1;
-					else return static_cast<int>((rotation+2.f) / 90.f);
+					else return (static_cast<int>(rotation / 90.f) + 2)%4;
 				}
 			}();
 			if (m_player->getColor() != color && playerBounds.intersects(m_intern->getGlobalBounds()) == false)
@@ -103,7 +112,7 @@ public:
 		m_pointGainedCallback{ &GameScene::onPoint }, m_playerCollorChanged{ &Player::onColorChange }
 	{
 		if (!m_circleTexture->loadFromFile("assets/data001.png")) std::cerr << "cannot load assets/data001.png";
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			std::shared_ptr<Obstacle<GameScene>> obstacle{ new Obstacle<GameScene>(i, playerPointer, gameController) };
 
