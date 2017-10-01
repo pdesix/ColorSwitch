@@ -85,7 +85,7 @@ public:
 		{
 			if (m_drawables[i] == object)
 			{
-				m_drawables.erase(i, 1);
+				m_drawables.erase(m_drawables.begin() + i);
 				return true;
 			}
 		}
