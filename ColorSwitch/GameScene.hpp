@@ -21,11 +21,15 @@ public:
 	{
 		if (event.KeyPressed && event.key.code == sf::Keyboard::Escape || event.type == sf::Event::Closed)
 			runCallback(LoopCodes::GameClose);
+		if (event.MouseButtonPressed && event.key.code == sf::Mouse::Left)
+		{
+			m_player->move();
+		}
 	}
 
 	void onDeath()
 	{
-		runCallback(LoopCodes::GameStart);
+		runCallback(LoopCodes::GameToMenu);
 	}
 
 	void onPoint()
@@ -33,7 +37,9 @@ public:
 	}
 
 	inline virtual void processLogic(sf::Time deltaTime) override 
-	{ 
-		m_gameMap.processLogic(deltaTime); 
+	{
+		if (m_player->applyGravity(deltaTime))
+			m_gameMap.move(deltaTime);
+		m_gameMap.processLogic(deltaTime);
 	}
 };
