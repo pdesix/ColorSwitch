@@ -49,18 +49,35 @@ public:
 		while (m_intern->getPosition().y > 750.f) m_intern->setPosition(m_intern->getPosition().x, m_intern->getPosition().y - 750.f);
 	}
 	
-	void checkCollision()
+	bool checkCollision()
 	{
-		if (m_player->getGlobalBounds().intersects(sf::CircleShape::getGlobalBounds()))
+		sf::FloatRect playerBounds{ m_player->getGlobalBounds() };
+		playerBounds.height -= 7.5f;
+		playerBounds.top += 7.5f;
+		if (playerBounds.intersects(sf::CircleShape::getGlobalBounds()))
 		{
-			auto color = [=]
+			auto color = [&]
 			{
-				float rotation{ sf::Sprite::getRotation() };
-				if (static_cast<int>(rotation) % 90 < 10) return -1;
-				else return static_cast<int>(rotation / 90.f);
+				if (m_player->getPosition().y > getGlobalBounds().top + getGlobalBounds().width)
+				{
+					float rotation{ sf::Sprite::getRotation() };
+					if (static_cast<int>(rotation) % 90 < 10) return -1;
+					else return static_cast<int>(rotation / 90.f);
+				}
+				else
+				{
+					float rotation{ sf::Sprite::getRotation() };
+					if (static_cast<int>(rotation) % 90 < 10) return -1;
+					else return static_cast<int>((rotation+2.f) / 90.f);
+				}
 			}();
-			if (m_player->getColor() != color && m_player->getGlobalBounds().intersects(m_intern->getGlobalBounds()) == false) { return m_playerDeath(m_base); }
+			if (m_player->getColor() != color && playerBounds.intersects(m_intern->getGlobalBounds()) == false)
+			{ 
+				m_playerDeath(m_base);
+				return true;
+			}
 		}
+		return false;
 	}
 };
 
@@ -110,7 +127,7 @@ public:
 		for (std::shared_ptr<Obstacle<GameScene>> obstacle : m_obstacles)
 		{
 			obstacle->rotate(deltaTime);
-			obstacle->checkCollision();
+			if (obstacle->checkCollision()) break;
 		}
 	}
 };
