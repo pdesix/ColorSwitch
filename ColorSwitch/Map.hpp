@@ -2,11 +2,10 @@
 #include "Interfaces.hpp"
 #include "Player.hpp"
 
-template<class T>
+template<class GameState>
 class Obstacle : public sf::CircleShape
 {
-	typedef T GameState;
-	typedef std::function<void(GameState &)> GameStateFunction;
+	using GameStateFunction = std::function<void(GameState &)>;
 
 	GameState & m_base;
 	std::shared_ptr<sf::CircleShape> m_intern;
@@ -56,12 +55,11 @@ public:
 	}
 };
 
-template<class T>
+template<class GameState>
 class Map : public ILogicProcessor
 {
-	typedef T GameState;
-	typedef std::function<void(GameState &)> GameStateFunction;
-	typedef std::function<void(Player&)> PlayerFunction;
+	using GameStateFunction = std::function<void(GameState &)>;
+	using PlayerFunction = std::function<void(Player&)>;
 
 	GameState & m_base;
 	GameStateFunction m_playerDeathCallback;

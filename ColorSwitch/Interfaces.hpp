@@ -35,12 +35,11 @@ public:
 	virtual void processLogic(sf::Time deltaTime) = 0;
 };
 
-template<class T>
-class IState: public IInputController, public IGraphicManager, public ILogicProcessor
+template<class Game> // fixme
+class StateManager : public IInputController, public IGraphicManager, public ILogicProcessor
 {
 protected:
-	typedef T Game;
-	typedef std::function<void(Game &, LoopCodes)> GameCallback;
+	using GameCallback = std::function<void(Game &, LoopCodes)>;
 
 private:
 	Game & m_base;
@@ -55,14 +54,19 @@ protected:
 	}
 
 public:
-	IState(Game & baseGame, GameCallback processFunction) : m_base{ baseGame }, m_postProcess{ processFunction } {}
-
-	virtual void handleInput(sf::Event & event) = 0;
-	virtual void processLogic(sf::Time deltaTime) = 0;
+	StateManager(Game & baseGame, GameCallback processFunction) : m_base{ baseGame }, m_postProcess{ processFunction } {}
 
 	virtual void manageGraphic(sf::RenderWindow & window)
 	{
 		for (std::shared_ptr<sf::Drawable> & drawable : m_drawables)
 			window.draw(*drawable);
 	}
+};
+
+template<class Game>
+class IState : public StateManager<Game>
+{
+public:
+	virtual void handleInput(sf::Event & event) = 0;
+	virtual void processLogic(sf::Time deltaTime) = 0;
 };

@@ -3,8 +3,8 @@
 #include "Player.hpp"
 #include "Map.hpp"
 
-template<class T>
-class GameState : public IState<T>
+template<class Game>
+class GameState : public StateManager<Game>
 {
 private:
 	std::shared_ptr<Player> m_player;
@@ -12,14 +12,14 @@ private:
 
 public:
 	GameState(Game & baseGame, GameCallback processFunction) 
-		: IState(baseGame, processFunction), m_player{std::make_shared<Player>(Player())}, m_gameMap{m_drawables, m_player,*this,&Player::onColorChange,&GameState::onDeath, &GameState::onPoint}
+		: StateManager(baseGame, processFunction), m_player{std::make_shared<Player>(Player())}, m_gameMap{m_drawables, m_player,*this,&Player::onColorChange,&GameState::onDeath, &GameState::onPoint}
 	{ 
 		m_drawables.push_back(m_player);
 	}
 
 	void onDeath()
 	{
-		runCallback(GameStart);
+		runCallback(LoopCodes::GameStart);
 	}
 
 	void onPoint()
