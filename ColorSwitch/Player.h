@@ -11,12 +11,11 @@ private:
 	std::default_random_engine m_generator;
 	std::uniform_int_distribution<int> m_distribution;
 
-
 public:
 	Player();
 	~Player();
 	int getColor() { return m_randNum; }
 
-	void changeColor();
+	void onColorChange();
 };
 
