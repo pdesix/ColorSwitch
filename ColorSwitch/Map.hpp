@@ -18,7 +18,7 @@ public:
 		m_playerDeath{ &GameScene::onDeath }
 	{
 		m_intern->setFillColor(sf::Color::Red);
-		setFillColor(sf::Color::Black);
+		//setFillColor(sf::Color::Black);
 
 		setRadius(25.f);
 		m_intern->setRadius(20.f);
@@ -85,10 +85,10 @@ public:
 
 	 		obstacle->setTexture(&(*m_circleTexture), true);
 
-			m_obstacles.push_back(obstacle);
-
 			drawables.push_back(obstacle);
 			drawables.push_back(obstacle->getInternalDrawable());
+
+			m_obstacles.push_back(obstacle);
 		}
 	}
 
@@ -98,3 +98,4 @@ public:
 			obstacle->move();
 	}
 };
+

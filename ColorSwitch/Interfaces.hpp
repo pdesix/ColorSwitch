@@ -58,7 +58,7 @@ protected:
 	void runCallback(LoopCodes code)
 	{
 		m_postProcess(m_base, code);
-	}
+}
 
 public:
 	BaseScene(Game & baseGame, GameCallback processFunction) : m_base{ baseGame }, m_postProcess{ processFunction }
