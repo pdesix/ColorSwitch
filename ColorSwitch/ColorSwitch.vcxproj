@@ -137,6 +137,7 @@
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Exceptions.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="Interfaces.hpp" />

@@ -14,9 +14,7 @@ public:
 	MenuScene(Game & baseGame, GameCallback processFunction) : BaseScene(baseGame, processFunction), m_font{ new sf::Font() }, play{ new sf::Text("Play", *m_font, 60u) }, exit{ new sf::Text("Exit", *m_font, 60u) }
 	{
 
-		if (!m_font->loadFromFile("assets/arial.ttf")) {
-			std::cerr << "cannot load assets/arial.ttf";
-		}
+		if (!m_font->loadFromFile("assets/arial.ttf")) throw FieNoutFoundException("assets/arial.ttf");
 
 		play->setFillColor(sf::Color::Red);
 		exit->setFillColor(sf::Color::Black);

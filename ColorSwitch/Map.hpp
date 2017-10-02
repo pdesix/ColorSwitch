@@ -1,6 +1,7 @@
 #pragma once
 #include "Interfaces.hpp"
 #include "Player.hpp"
+#include "Exceptions.hpp"
 
 template<class GameScene>
 class ColorSwitcher : public sf::CircleShape
@@ -128,12 +129,7 @@ public:
 			intBounds.top += 5;
 			intBounds.width -= 5;
 			if (m_player->getColor() != color && playerBounds.intersects(intBounds) == false)
-			{ 
-				/* _DEBUG
-				if (isDown) std::cout << "Detected: down. ";
-				else std::cout << "Detected: up. ";
-				std::cout << "Death. Player color: " << m_player->getColor() << "; current color: " << color << "\n";
-				*/
+			{
 				m_playerDeath(m_base);
 				return true;
 			}
@@ -167,7 +163,7 @@ public:
 		: m_base{ gameController }, m_player{ playerPointer }, m_circleTexture{ new sf::Texture() },
 		m_pointGainedCallback{ &GameScene::onPoint }
 	{
-		if (!m_circleTexture->loadFromFile("assets/data001.png")) std::cerr << "cannot load assets/data001.png";
+		if (!m_circleTexture->loadFromFile("assets/data001.png")) throw FieNoutFoundException("assets/data001.png");
 		for (int i = 0; i < 2; i++)
 		{
 			std::shared_ptr<Obstacle<GameScene>> obstacle{ new Obstacle<GameScene>(i, playerPointer, gameController) };
