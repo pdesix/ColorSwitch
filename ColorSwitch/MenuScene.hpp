@@ -23,34 +23,34 @@ public:
 	MenuScene(Game & baseGame, GameCallback processFunction)
 		: BaseScene(baseGame, processFunction), m_font{ new sf::Font() }, 
 		m_lastClick{ std::chrono::system_clock::now() },
-		stars{ new sf::Text("Stars: 0", *m_font, 45u) },
+		stars{ new sf::Text("Stars: 0", *m_font, 60u) },
 		play{ new sf::Text("Play", *m_font, 100u) },
-		shop{ new sf::Text("Shop", *m_font, 60u) },
-		exit{ new sf::Text("Exit", *m_font, 60u) },
-		authors{ new sf::Text("Made by Patryk Desant and Mateusz Wolski", *m_font, 30u) },
+		shop{ new sf::Text("Shop", *m_font, 100u) },
+		exit{ new sf::Text("Exit", *m_font, 100u) },
+		authors{ new sf::Text("Made by Patryk Desant and Mateusz Wolski", *m_font, 20u) },
 		menu_texture{ sf::Texture() },
 		menu_bg{ new sf::Sprite() }
 	{
-		if (!m_font->loadFromFile("assets/arial.ttf")) throw FieNoutFoundException("assets/arial.ttf");
+		if (!m_font->loadFromFile("assets/roboto.ttf")) throw FieNoutFoundException("assets/roboto.ttf");
 		if (!menu_texture.loadFromFile("assets/menu_bg.png")) throw FieNoutFoundException("assets/menu_bg.png");
 
 		menu_bg->setTexture(menu_texture);
 
 		stars->setFillColor(sf::Color::White);
-		play->setFillColor(sf::Color::White);
-		shop->setFillColor(sf::Color::White);
-		exit->setFillColor(sf::Color::White);
+		play->setFillColor(sf::Color::Green);
+		shop->setFillColor(sf::Color::Red);
+		exit->setFillColor(sf::Color::Red);
 		authors->setFillColor(sf::Color::White);
 
 		stars->setPosition(20, 20);
 		play->setPosition(800 / 2 - 60, 100);
-		shop->setPosition(800 / 2 - 60, 250);
-		exit->setPosition(800 / 2 - 60, 350);
-		authors->setPosition(50, 550);
+		shop->setPosition(800 / 2 - 60, 200);
+		exit->setPosition(800 / 2 - 60, 300);
+		authors->setPosition(400, 550);
 
 
 		m_drawables.push_back(menu_bg);
-		m_drawables.push_back(stars);
+		//m_drawables.push_back(stars);
 		m_drawables.push_back(play);
 		m_drawables.push_back(shop);
 		m_drawables.push_back(exit);
@@ -62,19 +62,19 @@ public:
 	virtual void switchOption(int selected) 
 	{
 		if (selected == 1) {
-			play->setCharacterSize(100u);
-			shop->setCharacterSize(60u);
-			exit->setCharacterSize(60u);
+			play->setFillColor(sf::Color::Green);
+			shop->setFillColor(sf::Color::Red);
+			exit->setFillColor(sf::Color::Red);
 		}
 		else if (selected == 2) {
-			play->setCharacterSize(60u);
-			shop->setCharacterSize(100u);
-			exit->setCharacterSize(60u);
+			play->setFillColor(sf::Color::Red);
+			shop->setFillColor(sf::Color::Green);
+			exit->setFillColor(sf::Color::Red);
 		}
 		else if (selected == 3) {
-			play->setCharacterSize(60u);
-			shop->setCharacterSize(60u);
-			exit->setCharacterSize(100u);
+			play->setFillColor(sf::Color::Red);
+			shop->setFillColor(sf::Color::Red);
+			exit->setFillColor(sf::Color::Green);
 		}
 	}
 
