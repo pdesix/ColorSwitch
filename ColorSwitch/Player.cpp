@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-Player::Player() : m_distribution(0,3), m_colors{ sf::Color::Red, sf::Color::Yellow, sf::Color::Blue, sf::Color::Green }, m_movement{0.f,0.f}
+Player::Player() : m_distribution(0, 3), m_generator{ std::clock() }, m_colors{ sf::Color{210,0,0}, sf::Color{13,34,187}, sf::Color{0,88,0}, sf::Color{187,175,13} }, m_movement{ 0.f,0.f }
 {
 	onColorChange();
 	setRadius(15.f);
