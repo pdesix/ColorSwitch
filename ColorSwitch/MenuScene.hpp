@@ -22,8 +22,8 @@ public:
 		menu_texture{ sf::Texture() },
 		menu_bg{ new sf::Sprite() }
 	{
-		if (!m_font->loadFromFile("assets/arial.ttf")) throw FieNoutFoundException("assets/arial.ttf");
-		if (!menu_texture.loadFromFile("assets/menu_bg.png")) throw FieNoutFoundException("assets/menu_bg.png");
+		if (!m_font->loadFromFile("assets/arial.ttf")) throw FileNotFoundException("assets/arial.ttf");
+		if (!menu_texture.loadFromFile("assets/menu_bg.png")) throw FileNotFoundException("assets/menu_bg.png");
 
 		menu_bg->setTexture(menu_texture);
 
