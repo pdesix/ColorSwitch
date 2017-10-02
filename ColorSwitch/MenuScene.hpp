@@ -43,9 +43,9 @@ public:
 		authors->setFillColor(sf::Color::White);
 
 		stars->setPosition(20, 20);
-		play->setPosition(800 / 2 - 60, 100);
-		shop->setPosition(800 / 2 - 60, 200);
-		exit->setPosition(800 / 2 - 60, 300);
+		play->setPosition(50, 100);
+		shop->setPosition(50, 200);
+		exit->setPosition(50, 300);
 		authors->setPosition(400, 550);
 
 
