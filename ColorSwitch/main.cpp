@@ -11,7 +11,7 @@ int main() {
 		std::cout << "Error occured: " << e.getMessage() << std::endl << std::endl << "Please contact with developers." << std::endl << "Press any key.";
 		std::cin.ignore();
 	}
-	catch (std::exception & e)
+	catch (...)
 	{
 		std::cout << "Unknown error occured. Please contact with developers." << std::endl << "Press any key.";
 		std::cin.ignore();
