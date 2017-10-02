@@ -3,7 +3,6 @@
 #include "Player.hpp"
 #include "Map.hpp"
 #include "Exceptions.hpp"
-#include <thread>
 
 template<class Game>
 class GameScene : public BaseScene<Game>
@@ -13,28 +12,22 @@ private:
 	Map<GameScene> m_gameMap;
 	sf::Font m_colorFont;
 	std::shared_ptr<sf::Text> m_colorText;
-	std::thread* m_cleanThread;
+	bool m_textActive;
+	std::chrono::steady_clock::time_point m_textSet;
 
 	void hideText()
 	{
-		try
-		{
-			std::this_thread::sleep_for(std::chrono::seconds(1));
-			if (m_colorText != nullptr) m_colorText->setPosition(-500.f, -500.f);
-		}
-		catch (...)
-		{
-
-		}
-		//delete m_cleanThread;
+		m_colorText->setPosition(-500.f, -500.f);
+		m_textActive = false;
 	}
 
 public:
 	GameScene(Game & baseGame, GameCallback processFunction) 
 		: BaseScene<Game>(baseGame, processFunction), 
 		m_player{ new Player() }, 
-		m_gameMap{m_drawables, m_player, *this},
-		m_colorText{ new sf::Text{"Red", m_colorFont, 30u} }
+		m_gameMap{ m_drawables, m_player, *this },
+		m_colorText{ new sf::Text{"Red", m_colorFont, 30u} },
+		m_textActive{ false }
 	{ 
 		m_drawables.push_back(m_player);
 		if (!m_colorFont.loadFromFile("assets/reitam.otf")) throw FileNotFoundException("assets/reitam.otf");
@@ -43,11 +36,6 @@ public:
 		m_colorText->setPosition(10000.f, 10000.f);
 
 		m_drawables.push_back(m_colorText);
-	}
-
-	~GameScene()
-	{
-		if (m_cleanThread != nullptr) delete m_cleanThread;
 	}
 
 	virtual void manageGraphic(sf::RenderWindow & window) override
@@ -81,16 +69,16 @@ public:
 		m_colorText->setString(colorString);
 		m_colorText->setFillColor(m_player->getFillColor());
 		m_colorText->setOrigin(m_colorText->getGlobalBounds().width / 2.f, m_colorText->getGlobalBounds().height / 2.f);
-		m_colorText->setPosition(400.f, 500.f);
-		/*if (m_cleanThread != nullptr)
-		{
-			delete m_cleanThread;
-		}*/
-		m_cleanThread = new std::thread(&GameScene::hideText, this);
+		m_colorText->setPosition(180.f, 400.f);
+		m_textSet = std::chrono::steady_clock::now();
+		m_textActive = true;
 	}
 
 	inline virtual void processLogic(sf::Time deltaTime) override 
 	{
+		if (m_textActive)
+			if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - m_textSet).count() > 1000)
+				hideText();
 		if (m_player->applyGravity(deltaTime))
 			m_gameMap.move(deltaTime);
 		m_gameMap.processLogic(deltaTime);
