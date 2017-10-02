@@ -1,22 +1,27 @@
 #pragma once
 #include "Interfaces.hpp"
 #include <array>
+#include <chrono>
 
 template<class Game>
 class MenuScene : public BaseScene<Game>
 {
+	sf::Texture menu_texture;
+
 	std::unique_ptr<sf::Font> m_font;
 	std::shared_ptr<sf::Text> play;
 	std::shared_ptr<sf::Text> shop;
 	std::shared_ptr<sf::Text> exit;
 	std::shared_ptr<sf::Text> authors;
-	sf::Texture menu_texture;
 	std::shared_ptr<sf::Sprite> menu_bg;
 
 	int selected;
+
+	std::chrono::system_clock::time_point m_lastClick;
 public:
 	MenuScene(Game & baseGame, GameCallback processFunction)
-		: BaseScene(baseGame, processFunction), m_font{ new sf::Font() },
+		: BaseScene(baseGame, processFunction), m_font{ new sf::Font() }, 
+		m_lastClick{ std::chrono::system_clock::now() },
 		play{ new sf::Text("Play", *m_font, 100u) },
 		shop{ new sf::Text("Shop", *m_font, 60u) },
 		exit{ new sf::Text("Exit", *m_font, 60u) },
@@ -49,7 +54,8 @@ public:
 		selected = 1;
 	}
 
-	virtual void switchOption(int selected) {
+	virtual void switchOption(int selected) 
+	{
 		if (selected == 1) {
 			play->setCharacterSize(100u);
 			shop->setCharacterSize(60u);
@@ -76,10 +82,18 @@ public:
 
 		//menu
 		else if (event.KeyPressed && event.key.code == sf::Keyboard::Down) {
+			std::chrono::system_clock::time_point now{ std::chrono::system_clock::now() };
+			std::chrono::duration<double> elapsed = now - m_lastClick;
+			if (elapsed.count() > 0.25) m_lastClick = now;
+			else return;
 			switchOption(++selected);
 		}
 		else if (event.KeyPressed && event.key.code == sf::Keyboard::Up) {
-			switchOption(--selected);
+			std::chrono::system_clock::time_point now{ std::chrono::system_clock::now() };
+			std::chrono::duration<double> elapsed = now - m_lastClick;
+			if (elapsed.count() > 0.25) m_lastClick = now;
+			else return;
+			switchOption (--selected);
 		}
 		else if (event.KeyPressed && event.key.code == sf::Keyboard::Return) {
 			if (selected == 1) {
