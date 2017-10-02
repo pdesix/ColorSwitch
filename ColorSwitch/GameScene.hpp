@@ -18,7 +18,7 @@ private:
 	void hideText()
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
-		m_colorText->setPosition(10000.f, 10000.f);
+		m_colorText->setPosition(-500.f, -500.f);
 		//delete m_cleanThread;
 	}
 
