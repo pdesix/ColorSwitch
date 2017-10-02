@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game() : m_window{ sf::VideoMode{800u, 600u, 32u}, "ColorSwitch", sf::Style::Default, sf::ContextSettings(24u,8u,16u) }, m_currentScene{ new MenuScene<Game>(*this,&Game::loopProcessing) }
+Game::Game() : m_window{ sf::VideoMode{360u, 480u, 32u}, "ColorSwitch", sf::Style::Default, sf::ContextSettings(24u,8u,16u) }, m_currentScene{ new MenuScene<Game>(*this,&Game::loopProcessing) }
 {
 	m_window.setFramerateLimit(30);
 }
