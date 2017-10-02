@@ -8,35 +8,51 @@ class MenuScene : public BaseScene<Game>
 	std::unique_ptr<sf::Font> m_font;
 	std::shared_ptr<sf::Text> play;
 	std::shared_ptr<sf::Text> exit;
+	std::shared_ptr<sf::Text> authors;
+	sf::Texture menu_texture;
+	std::shared_ptr<sf::Sprite> menu_bg;
 
 	bool up;
 public:
-	MenuScene(Game & baseGame, GameCallback processFunction) : BaseScene(baseGame, processFunction), m_font{ new sf::Font() }, play{ new sf::Text("Play", *m_font, 60u) }, exit{ new sf::Text("Exit", *m_font, 60u) }
+	MenuScene(Game & baseGame, GameCallback processFunction)
+		: BaseScene(baseGame, processFunction), m_font{ new sf::Font() },
+		play{ new sf::Text("Play", *m_font, 100u) },
+		exit{ new sf::Text("Exit", *m_font, 60u) },
+		authors{ new sf::Text("Made by Patryk Desant and Mateusz Wolski", *m_font, 30u) },
+		menu_texture{ sf::Texture() },
+		menu_bg{ new sf::Sprite() }
 	{
-
 		if (!m_font->loadFromFile("assets/arial.ttf")) throw FieNoutFoundException("assets/arial.ttf");
+		if (!menu_texture.loadFromFile("assets/menu_bg.png")) throw FieNoutFoundException("assets/menu_bg.png");
 
-		play->setFillColor(sf::Color::Red);
-		exit->setFillColor(sf::Color::Black);
+		menu_bg->setTexture(menu_texture);
 
-		play->setPosition(800 / 2 - 40, 100);
-		exit->setPosition(800 / 2 - 40, 300);
-    
+		play->setFillColor(sf::Color::White);
+		exit->setFillColor(sf::Color::White);
+		authors->setFillColor(sf::Color::White);
+
+		play->setPosition(800 / 2 - 60, 100);
+		exit->setPosition(800 / 2 - 60, 300);
+		authors->setPosition(50, 550);
+
+
+		m_drawables.push_back(menu_bg);
 		m_drawables.push_back(play);
 		m_drawables.push_back(exit);
+		m_drawables.push_back(authors);
 
 		up = true;
 	}
 
 	virtual void switchOption(bool up) {
 		if (up) {
-			play->setFillColor(sf::Color::Red);
-			exit->setFillColor(sf::Color::Black);
+			play->setCharacterSize(100u);
+			exit->setCharacterSize(60u);
 			up = false;
 		}
 		else {
-			play->setFillColor(sf::Color::Black);
-			exit->setFillColor(sf::Color::Red);
+			play->setCharacterSize(60u);
+			exit->setCharacterSize(100u);
 			up = true;
 		}
 	}
