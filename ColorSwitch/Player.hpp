@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <array>
 #include <random>
+#include <chrono>
 
 class Player : public sf::CircleShape
 {
@@ -10,7 +11,7 @@ private:
 	int m_randNum; 
 	
 	std::default_random_engine m_generator;
-	std::uniform_int_distribution<int> m_distribution;
+	std::uniform_int_distribution<unsigned int> m_distribution;
 
 	sf::Vector2f m_movement;
 
