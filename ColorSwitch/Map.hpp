@@ -107,11 +107,13 @@ public:
 		playerBounds.top += 7.5f;
 		if (playerBounds.intersects(sf::CircleShape::getGlobalBounds()))
 		{
+			bool isDown{ false };
 			auto color = [&]
 			{
-				if (m_player->getPosition().y > getGlobalBounds().top + getGlobalBounds().width)
+				if (m_player->getPosition().y > sf::CircleShape::getGlobalBounds().top + getGlobalBounds().width/2.f)
 				{
 					float rotation{ sf::CircleShape::getRotation() };
+					isDown = true;
 					if (static_cast<int>(rotation) % 90 < 10) return -1;
 					else return static_cast<int>(rotation / 90.f);
 				}
@@ -122,8 +124,16 @@ public:
 					else return (static_cast<int>(rotation / 90.f) + 2)%4;
 				}
 			}();
-			if (m_player->getColor() != color && playerBounds.intersects(m_intern->getGlobalBounds()) == false)
+			sf::FloatRect intBounds{ m_intern->getGlobalBounds() };
+			intBounds.top += 5;
+			intBounds.width -= 5;
+			if (m_player->getColor() != color && playerBounds.intersects(intBounds) == false)
 			{ 
+				/* _DEBUG
+				if (isDown) std::cout << "Detected: down. ";
+				else std::cout << "Detected: up. ";
+				std::cout << "Death. Player color: " << m_player->getColor() << "; current color: " << color << "\n";
+				*/
 				m_playerDeath(m_base);
 				return true;
 			}
@@ -158,7 +168,7 @@ public:
 		m_pointGainedCallback{ &GameScene::onPoint }
 	{
 		if (!m_circleTexture->loadFromFile("assets/data001.png")) std::cerr << "cannot load assets/data001.png";
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			std::shared_ptr<Obstacle<GameScene>> obstacle{ new Obstacle<GameScene>(i, playerPointer, gameController) };
 
