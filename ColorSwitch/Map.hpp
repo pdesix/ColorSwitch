@@ -28,14 +28,16 @@ public:
 		sf::CircleShape::setPosition(x, y);
 	}
 
-	void switchActivity()
+	bool switchActivity()
 	{
 		if (m_active)
 		{
 			m_playerCollorChanged(*m_player);
 			setPosition(-500.f, -500.f);
+			return true;
 		}
 		m_active = !m_active;
+		return false;
 	}
 
 	bool isActive()
@@ -60,15 +62,19 @@ public:
 		: m_base{ baseObject }, m_player { gamePlayer }, m_intern{std::make_shared<sf::CircleShape>()},
 		m_playerDeath{ &GameScene::onDeath }
 	{
-		m_intern->setFillColor(sf::Color::White);
+		std::default_random_engine generator(std::clock());
+		std::uniform_real_distribution<float> distribution(0.f,360.f);
+		
+		m_intern->setFillColor(sf::Color(91u, 91u, 91u));
 
-		setRadius(75.f);
-		m_intern->setRadius(65.f);
+		setRadius(95.f);
+		m_intern->setRadius(85.f);
 
 		setOrigin(getGlobalBounds().height / 2.f, getGlobalBounds().width / 2.f);
 		m_intern->setOrigin(m_intern->getGlobalBounds().height / 2.f, m_intern->getGlobalBounds().width / 2.f);
 
-		setPosition(400.f, -350.f * positionIndex);
+		setPosition(180.f, -350.f * positionIndex);
+		setRotation(distribution(generator));
 
 		float pX = getGlobalBounds().left + getGlobalBounds().width / 2.f;
 		float pY = getGlobalBounds().top + getGlobalBounds().height / 2.f;
@@ -88,7 +94,7 @@ public:
 
 	void move(sf::Time deltaTime)
 	{
-		while (getPosition().y > 750.f)
+		while (getPosition().y > 600.f)
 		{
 			if (!m_switcher->isActive()) m_switcher->switchActivity();
 			sf::CircleShape::move(0.f, -750.f);
@@ -136,7 +142,7 @@ public:
 
 			if (playerBounds.intersects(m_switcher->getGlobalBounds()))
 			{
-				m_switcher->switchActivity();
+				if (m_switcher->switchActivity()) m_base.onPoint();
 			}
 		}
 		return false;
@@ -163,7 +169,7 @@ public:
 		: m_base{ gameController }, m_player{ playerPointer }, m_circleTexture{ new sf::Texture() },
 		m_pointGainedCallback{ &GameScene::onPoint }
 	{
-		if (!m_circleTexture->loadFromFile("assets/data001.png")) throw FieNoutFoundException("assets/data001.png");
+		if (!m_circleTexture->loadFromFile("assets/data001a.png")) throw FileNotFoundException("assets/data001b.png");
 		for (int i = 0; i < 2; i++)
 		{
 			std::shared_ptr<Obstacle<GameScene>> obstacle{ new Obstacle<GameScene>(i, playerPointer, gameController) };

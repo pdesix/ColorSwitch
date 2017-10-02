@@ -1,17 +1,20 @@
 #include "Player.hpp"
 
-Player::Player() : m_distribution(0, 3), m_generator{ std::clock() }, m_colors{ sf::Color{210,0,0}, sf::Color{13,34,187}, sf::Color{0,88,0}, sf::Color{187,175,13} }, m_movement{ 0.f,0.f }
+Player::Player() : m_distribution(0, 3), m_generator{ std::clock() }, m_colors{ sf::Color{154,137,164}, sf::Color{ 54,137,193 }, sf::Color{0,122,88}, sf::Color{ 165,137,11 }}, m_movement{ 0.f,0.f }
 {
 	onColorChange();
-	setRadius(15.f);
+	setRadius(10.f);
 	setOrigin(getGlobalBounds().width/2.f, getGlobalBounds().width/2.f);
 
-	setPosition(400.f, 450.f);
+	setPosition(180.f, 240.f);
 }
 
 void Player::onColorChange()
 {
-	m_randNum = m_distribution(m_generator);
+	int tempRandNum{ m_randNum};
+	while(tempRandNum == m_randNum)
+		tempRandNum = m_distribution(m_generator);
+	m_randNum = tempRandNum;
 	setFillColor(m_colors[m_randNum]);
 }
 

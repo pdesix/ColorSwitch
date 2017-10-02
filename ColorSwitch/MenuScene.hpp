@@ -33,7 +33,7 @@ public:
 	{
 		if (!m_font->loadFromFile("assets/roboto.ttf")) throw FieNoutFoundException("assets/roboto.ttf");
 		if (!menu_texture.loadFromFile("assets/menu_bg.png")) throw FieNoutFoundException("assets/menu_bg.png");
-
+    
 		menu_bg->setTexture(menu_texture);
 
 		stars->setFillColor(sf::Color::White);

@@ -11,8 +11,8 @@ public:
 	Exception(std::string exceptionMessage) : m_errorMessage{ exceptionMessage } { }
 };
 
-class FieNoutFoundException : Exception
+class FileNotFoundException : Exception
 {
 public:
-	FieNoutFoundException(std::string file) : Exception("File not found: " + file) { }
+	FileNotFoundException(std::string file) : Exception("File not found: " + file) { }
 };
