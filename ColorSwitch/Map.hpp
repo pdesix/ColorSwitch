@@ -65,15 +65,15 @@ public:
 		std::default_random_engine generator(std::clock());
 		std::uniform_real_distribution<float> distribution(0.f,360.f);
 		
-		m_intern->setFillColor(sf::Color(176u,194u,208u));
+		m_intern->setFillColor(sf::Color(91u, 91u, 91u));
 
-		setRadius(75.f);
-		m_intern->setRadius(65.f);
+		setRadius(95.f);
+		m_intern->setRadius(85.f);
 
 		setOrigin(getGlobalBounds().height / 2.f, getGlobalBounds().width / 2.f);
 		m_intern->setOrigin(m_intern->getGlobalBounds().height / 2.f, m_intern->getGlobalBounds().width / 2.f);
 
-		setPosition(400.f, -350.f * positionIndex);
+		setPosition(180.f, -350.f * positionIndex);
 		setRotation(distribution(generator));
 
 		float pX = getGlobalBounds().left + getGlobalBounds().width / 2.f;
@@ -94,11 +94,11 @@ public:
 
 	void move(sf::Time deltaTime)
 	{
-		while (getPosition().y > 700.f)
+		while (getPosition().y > 600.f)
 		{
 			if (!m_switcher->isActive()) m_switcher->switchActivity();
-			sf::CircleShape::move(0.f, -850.f);
-			m_intern->move(0.f, -850.f);
+			sf::CircleShape::move(0.f, -750.f);
+			m_intern->move(0.f, -750.f);
 			m_switcher->setPosition(getPosition().x, getPosition().y);
 		}
 
