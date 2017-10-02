@@ -17,8 +17,15 @@ private:
 
 	void hideText()
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		m_colorText->setPosition(-500.f, -500.f);
+		try
+		{
+			std::this_thread::sleep_for(std::chrono::seconds(1));
+			if (m_colorText != nullptr) m_colorText->setPosition(-500.f, -500.f);
+		}
+		catch (...)
+		{
+
+		}
 		//delete m_cleanThread;
 	}
 
@@ -36,6 +43,11 @@ public:
 		m_colorText->setPosition(10000.f, 10000.f);
 
 		m_drawables.push_back(m_colorText);
+	}
+
+	~GameScene()
+	{
+		if (m_cleanThread != nullptr) delete m_cleanThread;
 	}
 
 	virtual void manageGraphic(sf::RenderWindow & window) override
