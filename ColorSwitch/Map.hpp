@@ -67,8 +67,8 @@ public:
 		
 		m_intern->setFillColor(sf::Color(91u, 91u, 91u));
 
-		setRadius(95.f);
-		m_intern->setRadius(85.f);
+		setRadius(70.f);
+		m_intern->setRadius(55.f);
 
 		setOrigin(getGlobalBounds().height / 2.f, getGlobalBounds().width / 2.f);
 		m_intern->setOrigin(m_intern->getGlobalBounds().height / 2.f, m_intern->getGlobalBounds().width / 2.f);
